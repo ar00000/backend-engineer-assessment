@@ -13,6 +13,15 @@ public interface AccountService {
   Account createAccount(Account details);
 
   /**
+   * updateAccount updates an existing account in the system or provider.
+   *
+   * @param accountId id of account to update
+   * @param details is the details of the account to be updated.
+   * @return Account
+   */
+  Account updateAccount(String accountId, Account details);
+
+  /**
    * getAccounts returns a list of accounts.
    *
    * @return List<Account>

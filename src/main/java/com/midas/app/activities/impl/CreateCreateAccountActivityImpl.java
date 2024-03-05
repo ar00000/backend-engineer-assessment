@@ -1,8 +1,9 @@
 package com.midas.app.activities.impl;
 
-import com.midas.app.activities.AccountActivity;
+import com.midas.app.activities.CreateAccountActivity;
 import com.midas.app.dao.AccountDao;
 import com.midas.app.models.Account;
+import com.midas.app.workflows.CreateAccountWorkflow;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
@@ -12,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-@ActivityImpl(taskQueues = "create-account-workflow")
-public class AccountActivityImpl implements AccountActivity {
+@ActivityImpl(taskQueues = CreateAccountWorkflow.QUEUE_NAME)
+public class CreateCreateAccountActivityImpl implements CreateAccountActivity {
 
   @Autowired private AccountDao accountDao;
 

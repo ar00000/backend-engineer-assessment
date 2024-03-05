@@ -7,6 +7,7 @@ import com.midas.app.services.AccountService;
 import com.midas.generated.api.AccountsApi;
 import com.midas.generated.model.AccountDto;
 import com.midas.generated.model.CreateAccountDto;
+import com.midas.generated.model.UpdateAccountDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -22,8 +23,8 @@ public class AccountController implements AccountsApi {
   private final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
   /**
-   * POST /accounts : Create a new user account Creates a new user account with the given details
-   * and attaches a supported payment provider such as &#39;stripe&#39;.
+   * POST /accounts : Creates a new user account with the given details and attaches a supported
+   * payment provider such as &#39;stripe&#39;.
    *
    * @param createAccountDto User account details (required)
    * @return User account created (status code 201)
@@ -57,5 +58,30 @@ public class AccountController implements AccountsApi {
     var accountsDto = accounts.stream().map(Mapper::toAccountDto).toList();
 
     return new ResponseEntity<>(accountsDto, HttpStatus.OK);
+  }
+
+  /**
+   * PATCH /accounts/{accountId} : Update an existing user account with the given details and
+   * attaches a supported payment provider such as &#39;stripe&#39;.
+   *
+   * @param updateAccountDto User account details (required)
+   * @return User account updated (status code 201)
+   */
+  @Override
+  public ResponseEntity<AccountDto> updateUserAccount(
+      String accountId, UpdateAccountDto updateAccountDto) {
+    logger.info("Updating account for user with email: {}", updateAccountDto.getEmail());
+
+    var account =
+        accountService.updateAccount(
+            accountId,
+            Account.builder()
+                .firstName(updateAccountDto.getFirstName())
+                .lastName(updateAccountDto.getLastName())
+                .email(updateAccountDto.getEmail())
+                .providerType(ProviderType.STRIPE)
+                .build());
+
+    return new ResponseEntity<>(Mapper.toAccountDto(account), HttpStatus.CREATED);
   }
 }

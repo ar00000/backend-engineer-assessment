@@ -18,6 +18,24 @@ components:
           description: "Email of user"
           example: "john@doe.com"
           required: true
+    updateAccount:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: "User's first name"
+          example: "John"
+          required: true
+        lastName:
+          type: string
+          description: "User's last name"
+          example: "Doe"
+          required: true
+        email:
+          type: string
+          description: "Email of user"
+          example: "john@doe.com"
+          required: true
     account:
       type: object
       properties:

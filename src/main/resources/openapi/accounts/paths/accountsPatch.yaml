@@ -1,0 +1,35 @@
+patch:
+  parameters:
+    - in: path
+      name: accountId
+      required: true
+      schema:
+        type: string
+      description: unique identifier of account
+  summary: update an existing user account
+  operationId: updateUserAccount
+  description: Updates an existing user account with the given details and attaches a supported payment provider such as 'stripe'.
+  tags:
+    - Accounts
+  requestBody:
+    description: User account details
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas.yml#/components/schemas/updateAccount"
+  responses:
+    "201":
+      description: User account created
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas.yml#/components/schemas/account"
+    "400":
+      $ref: "../../common/responses.yml#/components/responses/badRequest"
+    "401":
+      $ref: "../../common/responses.yml#/components/responses/unauthorized"
+    "403":
+      $ref: "../../common/responses.yml#/components/responses/forbidden"
+    "500":
+      $ref: "../../common/responses.yml#/components/responses/internalServerError"
